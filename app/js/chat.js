@@ -11,8 +11,9 @@ conn.onopen = function (e) {
 
 conn.onmessage = function (e) {
     var data = JSON.parse(e.data)
-    
-    append_msg(data.msg, data.name)
+    var ID = getUserData().ID
+    if (ID == data.contact_id && getUserData().contact_id == data.ID)
+        append_msg(data.msg, data.name)
 };
 conn.onerror = function (e) {
     alert("Unable to connect to server. Please refresh page");
@@ -21,13 +22,15 @@ conn.onerror = function (e) {
 function send_msg() {
     var msg = msg_input.value
     if (!msg) return;
-    var name = getUserData().user;
+    var name = getUserData().username
+    var ID = getUserData().ID
+    var contact_id = getUserData().contact_id
     if (!name) name = "Anonymous"
 
 
     append_msg(msg, true)
 
-    msg = {name:name, msg:msg}
+    msg = {ID:ID,  name:name, msg:msg, contact_id: contact_id}
     msg = JSON.stringify(msg)
 
     conn.send(msg)

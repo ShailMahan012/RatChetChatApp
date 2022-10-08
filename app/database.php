@@ -39,12 +39,19 @@
 
         // create new contact
         function insert_contact($ID, $contact_id) {
-            $sql = "SELECT ID FROM contacts WHERE user_id=$ID AND contact_id=$contact_id;";
-            $ret = $this->query($sql)->fetchArray(SQLITE3_ASSOC);
+            $ret = $this->check_contact($ID, $contact_id);
             if (!$ret) {
                 $sql = "INSERT INTO contacts (user_id, contact_id) VALUES($ID, $contact_id);";
                 $this->query($sql);
             }
+        }
+
+        // Just check if currect user and contact id are contacts
+        function check_contact($ID, $contact_id) {
+            $sql = "SELECT ID FROM contacts WHERE user_id=$ID AND contact_id=$contact_id;";
+            $ret = $this->query($sql)->fetchArray(SQLITE3_ASSOC);
+            if ($ret) return true;
+            return false;
         }
 
         // return all contacts of user $ID
