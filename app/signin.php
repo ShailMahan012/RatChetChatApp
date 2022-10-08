@@ -29,10 +29,12 @@
 </body>
 </html>
 <?php
-    if(isset($_COOKIE["username"])) {
-        header("Location: index.html");
+    session_start();
+    if(isset($_SESSION["ID"])) {
+        header("Location: index.php");
         die;
     }
+
     require_once("database.php");
 
     if (!empty($_POST)) {
@@ -41,11 +43,12 @@
 
         $result = $db->find($email, $password);
         if ($result) {
+            $ID = $result["ID"];
             $username =  $result["username"];
-            setcookie("username", $username, time() + (86400 * 30), "/");
-            setcookie("email", $email, time() + (86400 * 30), "/");
-            header("Location: index.html");
-
+            $_SESSION["ID"] = $ID;
+            $_SESSION["username"] = $username;
+            header("Location: index.php");
+            die;
         }
         else {
             echo "<script>";

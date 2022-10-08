@@ -14,11 +14,14 @@ conn.onmessage = function (e) {
     
     append_msg(data.msg, data.name)
 };
+conn.onerror = function (e) {
+    alert("Unable to connect to server. Please refresh page");
+}
 
 function send_msg() {
     var msg = msg_input.value
     if (!msg) return;
-    var name = getCookie("username");
+    var name = getUserData().user;
     if (!name) name = "Anonymous"
 
 

@@ -1,3 +1,6 @@
+<?php
+   require_once("check_login.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +20,11 @@
                     <button class="btn btn-outline-secondary" type="button">Search</button>
                 </div>
             </div>
+            <div class="form-group">
+                <button id="logout_btn" class="btn btn-outline-danger btn-sm btn-block">LOGOUT</button>
+            </div>
         </div>
     </div>
+    <script src="js/logout.js"></script>
 </body>
 </html>

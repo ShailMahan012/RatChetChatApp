@@ -15,7 +15,7 @@
             return false;
         }
         function find($email, $password) {
-            $sql = "SELECT username from users where email=\"$email\" AND password=\"$password\"";
+            $sql = "SELECT ID, username from users where email=\"$email\" AND password=\"$password\"";
             $ret = $this->query($sql)->fetchArray(SQLITE3_ASSOC);
             return $ret;
         }

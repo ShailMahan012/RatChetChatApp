@@ -1,3 +1,7 @@
+<?php
+   require_once("check_login.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,24 +26,16 @@
                 <a href="contacts.php" class="btn btn-secondary btn-sm btn-block" style="color: white;">CONTACTS</a>
             </div>
             <div class="form-group">
-                <button onclick="logout()" class="btn btn-outline-danger btn-sm btn-block">LOGOUT</button>
+                <button id="logout_btn" class="btn btn-outline-danger btn-sm btn-block">LOGOUT</button>
             </div>
         </div>
     </div>
-    
-    <script src="js/cookies.js"></script>
-    <script src="js/chat.js"></script>
     <script>
-        var username = getCookie("username")
-        if (!username) {
-            window.location.href = "signin.php"
-        }
-
-       function logout() {
-            deleteCookie("username")
-            deleteCookie("email")
-            window.location.href = "signin.php"
+        function getUserData() {
+            return {ID: <?php echo $_SESSION["ID"]?>, name: <?php echo '"' . $_SESSION["username"] . '"'?>}
         }
     </script>
+    <script src="js/chat.js"></script>
+    <script src="js/logout.js"></script>
 </body>
 </html>
