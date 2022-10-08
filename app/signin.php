@@ -31,7 +31,7 @@
 <?php
     session_start();
     if(isset($_SESSION["ID"])) {
-        header("Location: index.php");
+        header("Location: contacts.php");
         die;
     }
 
@@ -47,7 +47,7 @@
             $username =  $result["username"];
             $_SESSION["ID"] = $ID;
             $_SESSION["username"] = $username;
-            header("Location: index.php");
+            header("Location: contacts.php");
             die;
         }
         else {

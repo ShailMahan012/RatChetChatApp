@@ -29,3 +29,12 @@ body {
 .form-control:focus {
 	border-color: #5cb85c;
 }
+
+
+.contact {
+	border-radius:10px;
+	padding: 6px;
+	margin: 10px 0px;
+	border: 2px solid #5cb85c;
+	color: black;
+}

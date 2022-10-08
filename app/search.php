@@ -1,5 +1,13 @@
 <?php
-   require_once("check_login.php");
+    require_once("check_login.php");
+    require_once("database.php");
+    $searched = false;
+    if (!empty($_POST)) {
+        $searched = true;
+        $ID = $_SESSION["ID"];
+        $name = $_POST["name"];
+        $result = $db->search_user($name);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +22,7 @@
 <body>
     <div class="container">
         <div class="inner-container">
-            <form action="search.php" method="POST">
+            <form action="" method="POST" style="display: inline;">
                 <div class="input-group mb-3">
                     <input name="name" type="text" class="form-control" placeholder="Search User" aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
@@ -25,25 +33,29 @@
             <div class="form-group">
                 <button id="logout_btn" class="btn btn-outline-danger btn-sm btn-block">LOGOUT</button>
             </div>
+            <div class="form-group">
+                <a href="contacts.php" class="btn btn-secondary btn-sm btn-block" style="color: white;">CONTACTS</a>
+            </div>
         </div>
         <div class="inner-container" id="contacts_div">
-            <h3 style="text-align: center;">Your Contacts</h3>
+            <h3 style="text-align: center;">Contacts</h3>
         </div>
     </div>
     <script src="js/logout.js"></script>
     <script src="js/contacts.js"></script>
     <script>
-        const parent_page = "contacts"; // constant used in display_contact function
+        const parent_page = "search"; // constant used in display_contact function
         <?php
-            require_once("database.php");
-
-            $contacts = $db->get_contact_data($_SESSION["ID"]);
-
-            foreach($contacts as $contact) {
-                $contact_ID = $contact["ID"];
-                $username = $contact["username"];
-                $email = $contact["email"];
-                echo "display_contact($contact_ID, \"$username\", \"$email\");\n";
+            if ($searched) {
+                while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                    $contact_ID = $row["ID"];
+                    if ($contact_ID == $ID) {
+                        continue;
+                    }
+                    $username = $row["username"];
+                    $email = $row["email"];
+                    echo "display_contact($contact_ID, \"$username\", \"$email\");\n";
+                }
             }
         ?>
     </script>

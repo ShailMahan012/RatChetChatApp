@@ -33,13 +33,18 @@
 </body>
 </html>
 <?php
+    session_start();
+    if(isset($_SESSION["ID"])) {
+        header("Location: contacts.php");
+        die;
+    }
     require_once("database.php");
     if (!empty($_POST)) {
         $username = $_POST["username"];
         $email = $_POST["email"];
         $password = $_POST["password"];
 
-        $result = $db->insert($username, $email, $password);
+        $result = $db->insert_user($username, $email, $password);
         echo "<script>";
         if (!$result) {
             echo "alert('This Email is already in use');";
